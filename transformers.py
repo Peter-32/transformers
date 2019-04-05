@@ -1,3 +1,7 @@
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+import numpy as np
+
 # Standard scaler data preparation class
 
 
@@ -62,4 +66,3 @@ class BinarizerTransform(BaseEstimator, TransformerMixin):
                 X[:, index:index +
                   1] = X[:, index:index + 1] > self.thresholds[index]
         return np.c_[X]
-
