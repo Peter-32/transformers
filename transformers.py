@@ -2,6 +2,27 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, KBinsDiscretizer
 import numpy as np
 
+# The modeling class
+
+
+class MyCustomModel:
+    '''
+    - Includes algorithms as ensembles
+
+    '''
+
+    def __init__(self, uses_xgboost=True): # in the future add many booleans not just this one
+        self.model = None
+
+    def fit(self, train_X, train_y):
+        self.model = get_xgboost_model(train_X, train_y, quickly=True)
+        self.model.fit(train_X, train_y)
+
+    def predict(self, test_X):
+        return self.model.predict(test_X)
+
+
+
 # Standard scaler data preparation class
 
 
