@@ -32,14 +32,14 @@ class StandardScalerTransform(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] > 0.5:
                 self.standard_scalers[index] = StandardScaler()
                 self.standard_scalers[index].fit(X[:, index:index + 1])
         return self
 
     def transform(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] > 0.5:
                 X[:, index:index + 1] = self.standard_scalers[index].transform(
                     X[:, index:index + 1])
         return np.c_[X]
@@ -54,14 +54,14 @@ class MinMaxScalerTransform(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] > 0.5:
                 self.min_max_scalers[index] = MinMaxScaler(feature_range=(0, 10))
                 self.min_max_scalers[index].fit(X[:, index:index + 1])
         return self
 
     def transform(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] > 0.5:
                 X[:, index:index + 1] = self.min_max_scalers[index].transform(
                     X[:, index:index + 1])
         return np.c_[X]
@@ -77,14 +77,14 @@ class KBinsDiscretizerTransform(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 self.k_bins_discretizers[index] = KBinsDiscretizer(encode='ordinal', strategy='quantile')
                 self.k_bins_discretizers[index].fit(X[:, index:index + 1])
         return self
 
     def transform(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 try:
                     X[:, index:index +
                       1] = self.k_bins_discretizers[index].transform(X[:, index:index + 1])
@@ -102,14 +102,14 @@ class KBinsDiscretizerTransform2(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 self.k_bins_discretizers[index] = KBinsDiscretizer(encode='ordinal', strategy='kmeans')
                 self.k_bins_discretizers[index].fit(X[:, index:index + 1])
         return self
 
     def transform(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 try:
                     X[:, index:index +
                       1] = self.k_bins_discretizers[index].transform(X[:, index:index + 1])
@@ -127,14 +127,14 @@ class KBinsDiscretizerTransform3(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 self.k_bins_discretizers[index] = KBinsDiscretizer(encode='ordinal', strategy='uniform')
                 self.k_bins_discretizers[index].fit(X[:, index:index + 1])
         return self
 
     def transform(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 try:
                     X[:, index:index +
                       1] = self.k_bins_discretizers[index].transform(X[:, index:index + 1])
@@ -152,14 +152,14 @@ class BinarizerTransform(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 self.thresholds[index] = np.quantile(X[:, index:index + 1],
                                                  0.50)
         return self
 
     def transform(self, X, y=None):
         for index in range(len(self.feature_is_included_list)):
-            if self.feature_is_included_list[index]:
+            if self.feature_is_included_list[index] == True:
                 X[:, index:index +
                   1] = X[:, index:index + 1] > self.thresholds[index]
         return np.c_[X]
